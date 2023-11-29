@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add, Sort, and Find Numbers</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h2>Add, Sort, and Find Numbers</h2>
+  
+  <label for="numberInput">Enter a number:</label>
+  <input type="text" id="numberInput">
+  <button onclick="addNumber()">Add</button>
+  
+  <br><br>
+  
+  <label for="numberList">Numbers:</label>
+  <br>
+  <select id="numberList" multiple></select>
+  
+  <br><br>
+  
+  <button onclick="sortNumbers()">Sort</button>
+  
+  <br><br>
+  
+  <label for="sortedNumberList">Sorted Numbers:</label>
+  <br>
+  <select id="sortedNumberList" multiple></select>
+  
+  <br><br>
+  
+  <button onclick="clearLists()">Clear</button>
+  
+  <br><br>
+  
+  <label for="findNumberInput">Find a number:</label>
+  <input type="text" id="findNumberInput">
+  <button onclick="findNumber()">Find</button>
+
+  <script>
+    function addNumber() {
+      var numberInput = document.getElementById('numberInput');
+      var number = numberInput.value;
+      
+      var dropdownList = document.getElementById('numberList');
+      var option = document.createElement('option');
+      option.text = number;
+      dropdownList.add(option);
+      
+      numberInput.value = '';
+    }
+    
+    function sortNumbers() {
+      var dropdownList = document.getElementById('numberList');
+      var sortedNumbers = Array.from(dropdownList.options).map(option => Number(option.value)).sort(function(a, b) {
+        return a - b;
+      });
+      
+      var sortedDropdownList = document.getElementById('sortedNumberList');
+      sortedDropdownList.innerHTML = '';
+      sortedNumbers.forEach(function(number) {
+        var option = document.createElement('option');
+        option.text = number;
+        sortedDropdownList.add(option);
+      });
+    }
+    
+    function clearLists() {
+      var dropdownList = document.getElementById('numberList');
+      dropdownList.innerHTML = '';
+      
+      var sortedDropdownList = document.getElementById('sortedNumberList');
+      sortedDropdownList.innerHTML = '';
+    }
+    
+    function findNumber() {
+      var numberInput = document.getElementById('findNumberInput');
+      var number = numberInput.value;
+      
+      var dropdownList = document.getElementById('numberList');
+      var index = -1;
+      for (var i = 0; i < dropdownList.options.length; i++) {
+        if (dropdownList.options[i].value == number) {
+          index = i;
+          break;
+        }
+      }
+      
+      if (index >= 0) {
+        alert("Number found at index: " + index);
+      } else {
+        alert("Number not found!");
+      }
+    }
+  </script>
+</body>
+</html>
